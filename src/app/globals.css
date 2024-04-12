@@ -79,6 +79,15 @@
       #0283e9 -18.13%,
       #fc01ca 120.27%
     );
+    @apply transition-colors;
+  }
+
+  .bg-gradient:hover {
+    background-image: linear-gradient(
+      238.66deg,
+      #fc01ca -18.13%,
+      #0283e9 120.27%
+    );
   }
 
   .text-gradient {
@@ -87,9 +96,6 @@
       #0283e9 -18.13%,
       #fc01ca 120.27%
     );
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-    width: fit-content;
+    @apply inline-block w-fit bg-clip-text text-transparent;
   }
 }
