@@ -24,7 +24,7 @@ function Cta() {
         </p>
         <div className="flex justify-center gap-4">
           <Link
-            href="/sign-in"
+            href="/login"
             className={buttonVariants({
               variant: "default",
               class: "bg-gradient text-white",
@@ -33,7 +33,7 @@ function Cta() {
             تسجيل الدخول
           </Link>
           <Link
-            href="/sign-up"
+            href="/register"
             className={buttonVariants({
               variant: "default",
               class: "bg-gradient text-white",

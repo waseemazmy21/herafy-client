@@ -31,9 +31,9 @@ function Header() {
             placeholder="البحث..."
           />
           <Link
-            href="/sign-in"
+            href="/login"
             className={buttonVariants({
-              class: "bg-gradient text-white",
+              class: "bg-gradient-hover text-white",
             })}
           >
             تسجبل الدخول
