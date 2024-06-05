@@ -1,45 +1,99 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
+import { translateServerMessage } from "@/utils/utils";
 
 function LoginForm() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:7000/api/users/login",
+        {
+          email,
+          password,
+        },
+      );
+      const user = response.data.user;
+      const token = response.headers["x-auth-token"];
+
+      if (token) {
+        localStorage.setItem("token", token);
+        router.push("/register");
+      }
+    } catch (e: any) {
+      if (e.response) {
+        setError(e.response.data.message);
+      }
+      console.error(error);
+      alert(translateServerMessage(error));
+    }
+  };
+
   return (
-    <div className="flex justify-center p-8">
-      <form>
-        <Card className="w-full max-w-sm">
+    <div className="p-8">
+      <form onSubmit={handleSubmit}>
+        <Card className="mx-auto max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">تسجيل الدخول</CardTitle>
             <CardDescription>
-              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك.
+              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
+          <CardContent>
             <div className="grid gap-4">
-              <Label htmlFor="email">البريد الإلكتروني</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
+              <div className="grid gap-4">
+                <Label htmlFor="email">البريد الإلكتروني</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-4">
+                <Label htmlFor="password">كلمة المرور</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <Button type="submit" className="bg-gradient-hover w-full">
+                تسجيل الدخول
+              </Button>
             </div>
-            <div className="grid gap-4">
-              <Label htmlFor="password">كلمة المرور</Label>
-              <Input id="password" type="password" required />
+            <div className="mt-4 text-center text-sm">
+              ليس لديك حساب؟{" "}
+              <Link href="/register" className="underline">
+                إنشاء حساب
+              </Link>
             </div>
           </CardContent>
-          <CardFooter>
-            <Button className="bg-gradient-hover w-full">تسجيل الدخول</Button>
-          </CardFooter>
         </Card>
       </form>
     </div>
