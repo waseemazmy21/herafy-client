@@ -57,7 +57,10 @@ function Header() {
                 <Link href="/dashboard" className="hover:text-foreground">
                   مساحة العمل
                 </Link>
-                <Link href="/post-job" className="hover:text-foreground">
+                <Link
+                  href="/craftsman/post-job"
+                  className="hover:text-foreground"
+                >
                   نشر وظيفة
                 </Link>
               </>
