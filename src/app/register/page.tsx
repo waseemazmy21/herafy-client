@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import ClientRegistraionForm from "@/components/auth/ClientRegistrationForm";
+import CraftsmanRegistrationForm from "@/components/auth/craftsmanRegistrationForm";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -57,7 +58,11 @@ function RegisterFrom() {
     );
   }
 
-  return role === "client" ? <ClientRegistraionForm /> : null;
+  return role === "client" ? (
+    <ClientRegistraionForm />
+  ) : (
+    <CraftsmanRegistrationForm />
+  );
 }
 
 export default RegisterFrom;

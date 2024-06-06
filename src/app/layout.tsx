@@ -3,7 +3,6 @@ import { Rubik } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import Header from "@/components/header";
-import { Toaster } from "@/components/ui/toaster";
 
 const rubik = Rubik({ subsets: ["arabic"], variable: "--font-sans" });
 
@@ -27,7 +26,6 @@ export default function RootLayout({
       >
         <Header />
         <main>{children}</main>
-        <Toaster />
       </body>
     </html>
   );

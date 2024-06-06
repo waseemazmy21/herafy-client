@@ -14,41 +14,45 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { translateServerMessage } from "@/utils/utils";
 
-function LoginForm() {
+function CraftsmanRegistrationForm() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/users/login",
+        "http://localhost:7000/api/users/register",
         {
+          name,
           email,
           password,
+          role: "craftsman",
+          jobTitle,
+          description,
         },
       );
-
       const user = response.data.user;
       const token = response.headers["x-auth-token"];
 
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("user", user);
-        user.role === "client"
-          ? router.push("/client")
-          : router.push("/craftsman");
+        router.push("/craftsman");
       }
     } catch (e: any) {
       if (e.response) {
         setError(e.response.data.message);
       }
-      console.error(error);
       alert(translateServerMessage(error));
     }
   };
@@ -58,19 +62,28 @@ function LoginForm() {
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">تسجيل الدخول</CardTitle>
+            <CardTitle className="text-2xl">إنشاء حساب</CardTitle>
             <CardDescription>
-              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك
+              أدخل تفاصيل حسابك لإنشاء حساب حرفي
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-4">
+                <Label htmlFor="name">الاسم</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-4">
                 <Label htmlFor="email">البريد الإلكتروني</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -86,14 +99,34 @@ function LoginForm() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              <div className="grid gap-4">
+                <Label htmlFor="jobTitle">المسمى الوظيفي (الحرفه)</Label>
+                <Input
+                  id="jobTitle"
+                  type="text"
+                  required
+                  value={jobTitle}
+                  onChange={(e) => setJobTitle(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-4">
+                <Label htmlFor="description">الوصف</Label>
+                <Textarea
+                  id="description"
+                  required
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="اكتب عن خبراتك في هذه الحرفه"
+                />
+              </div>
               <Button type="submit" className="bg-gradient-hover w-full">
-                تسجيل الدخول
+                إنشاء حساب
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              ليس لديك حساب؟{" "}
-              <Link href="/register" className="underline">
-                إنشاء حساب
+              لديك حساب؟{" "}
+              <Link href="/login" className="underline">
+                تسجيل الدخول
               </Link>
             </div>
           </CardContent>
@@ -103,4 +136,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default CraftsmanRegistrationForm;
