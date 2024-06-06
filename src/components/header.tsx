@@ -54,13 +54,10 @@ function Header() {
             )}
             {user?.role === "client" && (
               <>
-                <Link href="/dashboard" className="hover:text-foreground">
+                <Link href="/client" className="hover:text-foreground">
                   مساحة العمل
                 </Link>
-                <Link
-                  href="/craftsman/post-job"
-                  className="hover:text-foreground"
-                >
+                <Link href="/client/post-job" className="hover:text-foreground">
                   نشر وظيفة
                 </Link>
               </>
