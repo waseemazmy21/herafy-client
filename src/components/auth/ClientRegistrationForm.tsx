@@ -14,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
 import { translateServerMessage } from "@/utils/utils";
 
 function ClientRegistrationForm() {
@@ -41,7 +40,7 @@ function ClientRegistrationForm() {
 
       if (token) {
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/client");
       }
     } catch (e: any) {

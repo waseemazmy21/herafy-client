@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
 import { translateServerMessage } from "@/utils/utils";
 
 function CraftsmanRegistrationForm() {
@@ -46,7 +45,7 @@ function CraftsmanRegistrationForm() {
 
       if (token) {
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/craftsman");
       }
     } catch (e: any) {

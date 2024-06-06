@@ -14,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
 import { translateServerMessage } from "@/utils/utils";
 
 function LoginForm() {
@@ -39,7 +38,7 @@ function LoginForm() {
 
       if (token) {
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         user.role === "client"
           ? router.push("/client")
           : router.push("/craftsman");
