@@ -39,7 +39,9 @@ function LoginForm() {
 
       if (token) {
         localStorage.setItem("token", token);
-        router.push("/register");
+        user.role === "client"
+          ? router.push("/client")
+          : router.push("/craftsman");
       }
     } catch (e: any) {
       if (e.response) {

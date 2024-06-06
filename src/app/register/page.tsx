@@ -1,70 +1,63 @@
-import Link from "next/link";
+"use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import ClientRegistraionForm from "@/components/auth/ClientRegistrationForm";
+import Image from "next/image";
+import { useState } from "react";
 
 function RegisterFrom() {
-  return (
-    <div className="flex justify-center p-8">
-      <form action="">
-        <Card className="mx-auto max-w-sm">
-          <CardHeader>
-            <CardTitle className="text-xl">Sign Up</CardTitle>
-            <CardDescription>
-              Enter your information to create an account
-            </CardDescription>
-          </CardHeader>
+  const [role, setRole] = useState<"client" | "craftsman" | null>(null);
+  console.log;
+  if (!role) {
+    return (
+      <div className="mx-auto mt-12 flex max-w-screen-md justify-center gap-4 px-4">
+        <Card
+          onClick={() => setRole("client")}
+          className="relative h-40 w-1/2 cursor-pointer py-4 transition-all hover:scale-105"
+        >
           <CardContent>
-            <div className="grid gap-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="first-name">First name</Label>
-                  <Input id="first-name" placeholder="Max" required />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="last-name">Last name</Label>
-                  <Input id="last-name" placeholder="Robinson" required />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" />
-              </div>
-              <Button type="submit" className="w-full">
-                Create an account
-              </Button>
-              <Button variant="outline" className="w-full">
-                Sign up with GitHub
-              </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link href="#" className="underline">
-                Sign in
-              </Link>
-            </div>
+            <Image
+              src="/images/client.png"
+              alt=""
+              width={30}
+              height={30}
+              className="mb-2 sm:h-14 sm:w-14"
+            />
+            <CardTitle>أنا عميل، توظيف</CardTitle>
+            <input
+              type="radio"
+              value="client"
+              checked={role === "client"}
+              className="absolute left-2 top-2"
+            />
           </CardContent>
         </Card>
-      </form>
-    </div>
-  );
+        <Card
+          onClick={() => setRole("craftsman")}
+          className="relative h-40 w-1/2 cursor-pointer py-4 transition-all hover:scale-105"
+        >
+          <CardContent>
+            <Image
+              src="/images/client.png"
+              alt=""
+              width={30}
+              height={30}
+              className="mb-2 sm:h-14 sm:w-14"
+            />
+            <CardTitle>أنا حرفي ابحث عن عمل</CardTitle>
+            <input
+              type="radio"
+              value="craftsman"
+              checked={role === "craftsman"}
+              className="absolute left-2 top-2"
+            />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return role === "client" ? <ClientRegistraionForm /> : null;
 }
 
 export default RegisterFrom;
