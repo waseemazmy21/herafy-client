@@ -116,4 +116,7 @@
   .typography-h3 {
     @apply text-xl font-semibold tracking-tight;
   }
+  .typography-h4 {
+    @apply text-xl font-semibold tracking-tight;
+  }
 }

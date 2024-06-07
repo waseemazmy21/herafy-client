@@ -78,3 +78,26 @@ export const categories: Category[] = [
     numberOfCraftsmen: 1834,
   },
 ];
+
+export const jobCategories = [
+  "محبوك",
+  "نجارة",
+  "تطريز",
+  "سباكة",
+  "صناعة المنسوجات",
+  "لحام",
+  "إكسسوارات",
+  "خزف",
+  "أعمال النسيج",
+  "نقاشة",
+  "أرضيات وسيراميك",
+] as const;
+
+export const jobDurations = [
+  "أسبوع",
+  "أسبوعين",
+  "شهر",
+  "شهرين",
+  "ثلاثة اشهر",
+  "أكثر من 6 أشهر",
+];

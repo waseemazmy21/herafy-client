@@ -17,11 +17,14 @@ const ClientDashboard = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get("http://localhost:7000/api/jobs", {
-          headers: {
-            "x-auth-token": token,
+        const response = await axios.get(
+          "http://localhost:7000/api/jobs/client",
+          {
+            headers: {
+              "x-auth-token": token,
+            },
           },
-        });
+        );
         setJobs(response.data);
       } catch (e: any) {
         setError(e.response?.data?.message || "An error occurred");

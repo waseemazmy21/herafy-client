@@ -40,7 +40,7 @@ function Header() {
                   href="/craftsman/my-jobs"
                   className="hover:text-foreground"
                 >
-                  وظائفى
+                  الوظائف التي قدمت عليها
                 </Link>
               </>
             )}

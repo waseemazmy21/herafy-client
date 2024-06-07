@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { translateServerMessage } from "@/utils/utils";
+import { jobCategories, jobDurations } from "@/lib/placehoder-data";
 
 const PostJobForm = () => {
   const router = useRouter();
@@ -94,14 +95,11 @@ const PostJobForm = () => {
                       <SelectValue placeholder="اختر المدة" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1 week">1 أسبوع</SelectItem>
-                      <SelectItem value="2 weeks">2 أسابيع</SelectItem>
-                      <SelectItem value="1 month">1 شهر</SelectItem>
-                      <SelectItem value="3 months">3 شهور</SelectItem>
-                      <SelectItem value="6 months">6 شهور</SelectItem>
-                      <SelectItem value="more than 6 months">
-                        أكثر من 6 شهور
-                      </SelectItem>
+                      {jobDurations.map((d) => (
+                        <SelectItem value={d} key={d}>
+                          {d}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -135,17 +133,11 @@ const PostJobForm = () => {
                     <SelectValue placeholder="اختر الفئة" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Knitting">محبوك</SelectItem>
-                    <SelectItem value="Carpentry">النجار</SelectItem>
-                    <SelectItem value="Embroidery">تطريز</SelectItem>
-                    <SelectItem value="Plumbing">سباك</SelectItem>
-                    <SelectItem value="TextileCrafting">
-                      صناعة المنسوجات
-                    </SelectItem>
-                    <SelectItem value="Welding">حداد</SelectItem>
-                    <SelectItem value="Accessories">اكسكسورات</SelectItem>
-                    <SelectItem value="Ceramics">خزف</SelectItem>
-                    <SelectItem value="TextileWorks">أعمال النسيج</SelectItem>
+                    {jobCategories.map((c) => (
+                      <SelectItem value={c} key={c}>
+                        {c}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
