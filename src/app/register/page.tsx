@@ -8,10 +8,9 @@ import { useState } from "react";
 
 function RegisterFrom() {
   const [role, setRole] = useState<"client" | "craftsman" | null>(null);
-  console.log;
   if (!role) {
     return (
-      <div className="mx-auto mt-12 flex max-w-screen-md justify-center gap-4 px-4">
+      <div className="mx-auto mt-12 flex min-h-96 max-w-screen-md justify-center gap-4 px-4">
         <Card
           onClick={() => setRole("client")}
           className="relative h-40 w-1/2 cursor-pointer py-4 transition-all hover:scale-105"

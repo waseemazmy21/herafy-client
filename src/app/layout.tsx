@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import Header from "@/components/header";
 import { UserProvider } from "./contexts/user-context";
+import Footer from "@/components/footer";
 
 const rubik = Rubik({ subsets: ["arabic"], variable: "--font-sans" });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <UserProvider>
           <Header />
           <main>{children}</main>
+          <Footer />
         </UserProvider>
       </body>
     </html>
