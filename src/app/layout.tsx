@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import Header from "@/components/header";
+import { UserProvider } from "./contexts/user-context";
 
 const rubik = Rubik({ subsets: ["arabic"], variable: "--font-sans" });
 
@@ -24,8 +25,10 @@ export default function RootLayout({
           rubik.variable,
         )}
       >
-        <Header />
-        <main>{children}</main>
+        <UserProvider>
+          <Header />
+          <main>{children}</main>
+        </UserProvider>
       </body>
     </html>
   );

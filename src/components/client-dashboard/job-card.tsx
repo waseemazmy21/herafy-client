@@ -1,6 +1,8 @@
 "use client";
 
-const JobCard = ({ job }: { job: any }) => {
+import { Job } from "@/lib/types";
+
+const JobCard = ({ job }: { job: Job }) => {
   return (
     <div className="border-b border-t border-gray-200 py-4">
       <div className="mb-2 flex items-center justify-between">

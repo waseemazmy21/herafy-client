@@ -1,29 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useUser } from "@/app/contexts/user-context";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 function Header() {
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const { user, setUser } = useUser();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setUser(null);
     window.location.href = "/";
   };
+
   return (
-    <div className="flex h-16 items-center border-b border-border bg-background sm:h-20">
+    <div className="flex h-12 items-center border-b border-border bg-background sm:h-20">
       <header className="container flex justify-between gap-8">
         <div className="flex items-center gap-8">
           <Link

@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import JobCard from "@/components/client-dashboard/job-card";
 import Link from "next/link";
 import { translateServerMessage } from "@/utils/utils";
+import { Job } from "@/lib/types";
 
 const ClientDashboard = () => {
   const [jobs, setJobs] = useState([]);
@@ -21,7 +22,6 @@ const ClientDashboard = () => {
             "x-auth-token": token,
           },
         });
-
         setJobs(response.data);
       } catch (e: any) {
         setError(e.response?.data?.message || "An error occurred");
@@ -38,14 +38,14 @@ const ClientDashboard = () => {
         <h1 className="typography-h3">مساحة العمل الخاصة بك</h1>
         <Link
           className={buttonVariants({ variant: "outline", class: "mb-4" })}
-          href="/craftsman/post-job"
+          href="/client/post-job"
         >
           نشر وظيفة
         </Link>
       </div>
       <div className="max-w-lg">
         {jobs.length > 0 ? (
-          jobs.map((job) => <JobCard key={job.id} job={job} />)
+          jobs.map((job: Job) => <JobCard key={job._id} job={job} />)
         ) : (
           <p>لم تنشر أي وظيفة بعد</p>
         )}

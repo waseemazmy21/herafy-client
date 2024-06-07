@@ -49,7 +49,7 @@ const PostJobForm = () => {
         },
       );
 
-      router.push("/craftsman");
+      router.push("/client");
     } catch (e: any) {
       setError(e.response?.data?.message || "An error occurred");
       alert(translateServerMessage(error));

@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { translateServerMessage } from "@/utils/utils";
+import { useUser } from "@/app/contexts/user-context";
 
 function CraftsmanRegistrationForm() {
   const router = useRouter();
@@ -25,6 +26,7 @@ function CraftsmanRegistrationForm() {
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
+  const { setUser } = useUser();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -40,17 +42,19 @@ function CraftsmanRegistrationForm() {
           description,
         },
       );
-      const user = response.data.user;
+      console.log("return value form craftsman registration ", response.data);
+      const user = response.data;
       const token = response.headers["x-auth-token"];
 
       if (token) {
         localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
         router.push("/craftsman");
       }
     } catch (e: any) {
       if (e.response) {
-        setError(e.response.data.message);
+        setError(e.response.data);
+        console.log(e.response.data);
       }
       alert(translateServerMessage(error));
     }
