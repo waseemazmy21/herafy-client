@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <div className="flex h-12 items-center border-b border-border bg-background sm:h-20">
+    <div className="flex h-16 items-center border-b border-border bg-background sm:h-20">
       <header className="container flex justify-between gap-8">
         <div className="flex items-center gap-8">
           <Link
