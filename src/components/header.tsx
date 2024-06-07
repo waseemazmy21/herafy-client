@@ -31,12 +31,6 @@ function Header() {
                   صفحتي
                 </Link>
                 <Link
-                  href="/craftsman/job-search"
-                  className="hover:text-foreground"
-                >
-                  البحث عن عمل
-                </Link>
-                <Link
                   href="/craftsman/my-jobs"
                   className="hover:text-foreground"
                 >
