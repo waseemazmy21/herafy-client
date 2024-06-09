@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { translateServerMessage } from "@/utils/utils";
-import { Proposal } from "@/lib/types";
+import { ProposalWithCraftsman as Proposal } from "@/lib/types";
 
 const propsalStatus = {
   pending: "لم يتم التحديد",
@@ -17,19 +17,30 @@ const ProposalComponent = ({ proposal }: { proposal: Proposal }) => {
   return (
     <div className="w-full cursor-pointer rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] ">
       <div className="mb-4 flex justify-between gap-4">
-        <h4 className="typography-h4">العرض</h4>
+        <h4 className="typography-h4">
+          عرض من:{" "}
+          <Link
+            href={`craftsman/:id`}
+            className={buttonVariants({
+              variant: "link",
+              class: "underline",
+            })}
+          >
+            {proposal.craftsmanId.name}
+          </Link>
+        </h4>
         <p>{proposal.proposedBudget} جنيه مصري</p>
       </div>
       <p className="text-muted-foreground">{proposal.message}</p>
       <div className="mt-6 flex justify-between">
-        <p>الحالة</p>
-        <p>{propsalStatus[proposal.status]}</p>
+        <Button variant={"outline"}>قبول العرض</Button>
       </div>
     </div>
   );
 };
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [error, setError] = useState("");
 
@@ -39,7 +50,7 @@ const Page = () => {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "http://localhost:7000/api/proposals/craftsman",
+          `http://localhost:7000/api/proposals/job/${id}`,
           {
             headers: {
               "x-auth-token": token,
@@ -47,7 +58,7 @@ const Page = () => {
           },
         );
         console.log(response.data);
-        setProposals(response.data); 
+        setProposals(response.data);
       } catch (e: any) {
         if (e.response.status === 401) {
           window.location.href = "/";
@@ -58,11 +69,10 @@ const Page = () => {
     };
 
     fetchProposals();
-  }, [error]);
-
+  }, [error, id]);
   return (
     <div className="container py-8">
-      <h3 className="typography-h3 mb-6">العروض التي قدمتها</h3>
+      <h3 className="typography-h3 mb-6">العروض</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">
@@ -74,7 +84,7 @@ const Page = () => {
             </div>
           ) : (
             <p className="text-2xl text-muted-foreground ">
-              لم تقم بالتقديم علي اي وظيفة بعد.
+              لم تتلقي اي عرض لهذه الوظيفه.
             </p>
           )}
         </div>

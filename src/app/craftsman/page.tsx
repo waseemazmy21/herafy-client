@@ -40,15 +40,22 @@ const JobSearch = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
+      const token = localStorage.getItem("token");
       try {
-        const response = await axios.get("http://localhost:7000/api/jobs");
+        const response = await axios.get("http://localhost:7000/api/jobs", {
+          headers: {
+            "x-auth-token": token,
+          },
+        });
+
         setJobs(response.data);
         setFilteredJobs(response.data);
         console.log(response.data);
       } catch (e: any) {
-        if (e.response.status === 401) {
-          window.location.href = "/";
-        }
+        console.log(e);
+        // if (e.response.status === 401) {
+        //   window.location.href = "/";
+        // }
         setError(e);
         console.log(e);
       }

@@ -21,9 +21,15 @@ const JobComponent = ({ job }: { job: Job }) => {
           <p>الفئة: {job.category}</p>
           <p className="">الموقع: {job.location}</p>
         </div>
-        <Button variant={"outline"} className="self-end">
+        <Link
+          href={`/client/job/${job._id}/proposals`}
+          className={buttonVariants({
+            variant: "outline",
+            className: "self-end",
+          })}
+        >
           تصفح العروض
-        </Button>
+        </Link>
       </div>
     </div>
   );
