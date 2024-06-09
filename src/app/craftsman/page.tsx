@@ -36,6 +36,7 @@ const JobSearch = () => {
   const [duration, setDuration] = useState("");
   const [minBudget, setMinBudget] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
+  const [error, setError] = useState();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -44,8 +45,12 @@ const JobSearch = () => {
         setJobs(response.data);
         setFilteredJobs(response.data);
         console.log(response.data);
-      } catch (error) {
-        console.log(error);
+      } catch (e: any) {
+        if (e.response.status === 401) {
+          window.location.href = "/";
+        }
+        setError(e);
+        console.log(e);
       }
     };
 

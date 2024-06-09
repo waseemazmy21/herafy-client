@@ -7,3 +7,12 @@ export type Job = {
   category: string;
   description: string;
 };
+
+export type Proposal = {
+  _id: string;
+  craftsmanId: string;
+  jobId: string;
+  message: string;
+  proposedBudget: number;
+  status: "pending" | "accepted" | "rejected";
+};

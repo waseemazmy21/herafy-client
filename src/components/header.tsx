@@ -31,10 +31,10 @@ function Header() {
                   صفحتي
                 </Link>
                 <Link
-                  href="/craftsman/my-jobs"
+                  href="/craftsman/my-proposals"
                   className="hover:text-foreground"
                 >
-                  الوظائف التي قدمت عليها
+                  العروض التي قدمتها
                 </Link>
               </>
             )}

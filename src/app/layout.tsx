@@ -22,13 +22,13 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" className="light min-h-screen">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "flex min-h-screen flex-col bg-background font-sans antialiased",
           rubik.variable,
         )}
       >
         <UserProvider>
           <Header />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </UserProvider>
       </body>
