@@ -50,6 +50,7 @@ const Page = () => {
         );
         console.log(response.data);
         setProposals(response.data);
+        setFilteredProposals(response.data);
       } catch (e: any) {
         if (e.response.status === 401) {
           window.location.href = "/";

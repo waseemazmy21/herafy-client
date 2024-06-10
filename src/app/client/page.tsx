@@ -36,7 +36,9 @@ const JobComponent = ({ job }: { job: Job }) => {
 };
 
 const ClientDashboard = () => {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -53,6 +55,7 @@ const ClientDashboard = () => {
           },
         );
         setJobs(response.data);
+        setFilteredJobs(response.data);
       } catch (e: any) {
         setError(e.response?.data?.message || "An error occurred");
         alert(translateServerMessage(error));
@@ -62,22 +65,31 @@ const ClientDashboard = () => {
     fetchJobs();
   }, [error]);
 
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = e.target.value;
+    setSelectedStatus(selected);
+    if (selected === "") {
+      setFilteredJobs(jobs);
+    } else {
+      const filtered = jobs.filter((job) => job.status === selected);
+      setFilteredJobs(filtered);
+    }
+  };
+
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">مساحه العمل الخاصة بك</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">
-          {jobs.length > 0 ? (
+          {filteredJobs.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {jobs.map((job: Job) => (
+              {filteredJobs.map((job: Job) => (
                 <JobComponent key={job._id} job={job} />
               ))}
             </div>
           ) : (
-            <p className="text-2xl text-muted-foreground ">
-              لم تقم بنشر اي وظيفة بعد.
-            </p>
+            <p className="text-2xl text-muted-foreground ">لا توجد وظائف</p>
           )}
         </div>
 
@@ -88,10 +100,14 @@ const ClientDashboard = () => {
           >
             نشر وظيفه
           </Link>
-          <select className="rounded border p-2">
+          <select
+            className="rounded border p-2"
+            value={selectedStatus}
+            onChange={handleFilterChange}
+          >
             <option value="">كل الحالات</option>
             <option value="open">المتاحه للحرفيين</option>
-            <option value="close">المنتهيه</option>
+            <option value="closed">المنتهيه</option>
           </select>
         </div>
       </div>

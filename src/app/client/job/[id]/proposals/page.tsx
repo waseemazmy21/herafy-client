@@ -61,7 +61,6 @@ const Page = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  console.log(proposals);
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">العروض</h3>
@@ -83,15 +82,6 @@ const Page = ({ params }: { params: { id: string } }) => {
               لم تتلقي اي عرض لهذه الوظيفه.
             </p>
           )}
-        </div>
-
-        <div className="flex w-full flex-col gap-4  rounded-xl border border-border p-4 sm:w-1/3">
-          <select className="rounded border p-2">
-            <option value="">كل الحالات</option>
-            <option value="accepted">المقبولة</option>
-            <option value="rejected">المرفوضه</option>
-            <option value="pending">لم يتم التحديد</option>
-          </select>
         </div>
       </div>
     </div>
