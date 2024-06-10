@@ -83,7 +83,7 @@ const ClientDashboard = () => {
 
         <div className="flex w-full flex-col gap-4  rounded-xl border border-border p-4 sm:w-1/3">
           <Link
-            href="/craftsman/job-post"
+            href="/client/post-job"
             className={buttonVariants({ variant: "outline" })}
           >
             نشر وظيفه
@@ -91,7 +91,7 @@ const ClientDashboard = () => {
           <select className="rounded border p-2">
             <option value="">كل الحالات</option>
             <option value="open">المتاحه للحرفيين</option>
-            <option value="close">المغلقه</option>
+            <option value="close">المنتهيه</option>
           </select>
         </div>
       </div>

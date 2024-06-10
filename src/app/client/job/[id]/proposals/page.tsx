@@ -2,41 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { ProposalWithCraftsman as Proposal } from "@/lib/types";
-
-const propsalStatus = {
-  pending: "لم يتم التحديد",
-  accepted: "مقبول",
-  rejected: "مرفوض",
-};
-
-const ProposalComponent = ({ proposal }: { proposal: Proposal }) => {
-  return (
-    <div className="w-full cursor-pointer rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] ">
-      <div className="mb-4 flex justify-between gap-4">
-        <h4 className="typography-h4">
-          عرض من:{" "}
-          <Link
-            href={`craftsman/:id`}
-            className={buttonVariants({
-              variant: "link",
-              class: "underline",
-            })}
-          >
-            {proposal.craftsmanId.name}
-          </Link>
-        </h4>
-        <p>{proposal.proposedBudget} جنيه مصري</p>
-      </div>
-      <p className="text-muted-foreground">{proposal.message}</p>
-      <div className="mt-6 flex justify-between">
-        <Button variant={"outline"}>قبول العرض</Button>
-      </div>
-    </div>
-  );
-};
+import ProposalComponent from "./Proposal";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -56,10 +23,9 @@ const Page = ({ params }: { params: { id: string } }) => {
             },
           },
         );
-        console.log(response.data);
         setProposals(response.data);
       } catch (e: any) {
-        if (e.response.status === 401) {
+        if (e.response?.status === 401) {
           window.location.href = "/";
         }
         setError(e);
@@ -70,6 +36,32 @@ const Page = ({ params }: { params: { id: string } }) => {
     fetchProposals();
   }, [error, id]);
 
+  const handleAcceptProposal = async (acceptedProposalId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.patch(
+        `http://localhost:7000/api/proposals/accept/${acceptedProposalId}`,
+        {},
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        },
+      );
+
+      setProposals((prevProposals) =>
+        prevProposals.map((proposal) =>
+          proposal._id === acceptedProposalId
+            ? { ...proposal, status: "accepted" }
+            : { ...proposal, status: "rejected" },
+        ),
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  console.log(proposals);
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">العروض</h3>
@@ -79,7 +71,11 @@ const Page = ({ params }: { params: { id: string } }) => {
           {proposals.length > 0 ? (
             <div className="flex flex-col gap-4">
               {proposals.map((proposal: Proposal) => (
-                <ProposalComponent key={proposal._id} proposal={proposal} />
+                <ProposalComponent
+                  onAccept={handleAcceptProposal}
+                  key={proposal._id}
+                  proposal={proposal}
+                />
               ))}
             </div>
           ) : (
