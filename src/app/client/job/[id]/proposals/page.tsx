@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { translateServerMessage } from "@/utils/utils";
 import { ProposalWithCraftsman as Proposal } from "@/lib/types";
 
 const propsalStatus = {
@@ -70,6 +69,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     fetchProposals();
   }, [error, id]);
+
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">العروض</h3>

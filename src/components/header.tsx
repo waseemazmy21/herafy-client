@@ -4,6 +4,9 @@ import { useUser } from "@/app/contexts/user-context";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { User } from "lucide-react";
+import { DropDownMenu } from "./drop-down-menu";
 
 function Header() {
   const { user, setUser } = useUser();
@@ -58,12 +61,13 @@ function Header() {
             placeholder="البحث..."
           /> */}
           {user ? (
-            <Button
-              onClick={handleLogout}
-              className="bg-gradient-hover text-white"
-            >
-              تسجيل خروج
-            </Button>
+            // <Button
+            //   onClick={handleLogout}
+            //   className="bg-gradient-hover text-white"
+            // >
+            //   تسجيل خروج
+            // </Button>
+            <DropDownMenu handleLogout={handleLogout} />
           ) : (
             <Link
               href="/login"

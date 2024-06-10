@@ -25,6 +25,7 @@ function CraftsmanRegistrationForm() {
   const [password, setPassword] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const { setUser } = useUser();
 
@@ -40,6 +41,7 @@ function CraftsmanRegistrationForm() {
           role: "craftsman",
           jobTitle,
           description,
+          phone,
         },
       );
       console.log("return value form craftsman registration ", response.data);
@@ -90,6 +92,16 @@ function CraftsmanRegistrationForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-4">
+                <Label htmlFor="phone">رقم الهاتف</Label>
+                <Input
+                  id="phone"
+                  type="phone"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               <div className="grid gap-4">
