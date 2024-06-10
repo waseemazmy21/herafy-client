@@ -5,7 +5,8 @@ import axios from "axios";
 import { Job } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { jobCategories, jobDurations } from "@/lib/placehoder-data";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 const JobComponent = ({ job }: { job: Job }) => {
   return (
@@ -21,9 +22,15 @@ const JobComponent = ({ job }: { job: Job }) => {
           <p>الفئة: {job.category}</p>
           <p className="">الموقع: {job.location}</p>
         </div>
-        <Button variant={"outline"} className="self-end">
+        <Link
+          href={`/craftsman/jobs/${job._id}/send-proposal`}
+          className={buttonVariants({
+            variant: "outline",
+            className: "self-end",
+          })}
+        >
           التقديم علي الوظيفه
-        </Button>
+        </Link>
       </div>
     </div>
   );
