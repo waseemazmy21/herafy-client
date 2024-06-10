@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { jobCategories, jobDurations } from "@/lib/placehoder-data";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
 
 const JobComponent = ({
   job,
@@ -15,7 +16,6 @@ const JobComponent = ({
   job: Job;
   hasApplied: boolean;
 }) => {
-  console.log("hasApplied", hasApplied);
   return (
     <div className="w-full rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] ">
       <div className="mb-4 flex justify-between gap-4">
@@ -60,8 +60,8 @@ const JobSearch = () => {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [category, setCategory] = useState("");
   const [duration, setDuration] = useState("");
-  const [minBudget, setMinBudget] = useState("");
-  const [maxBudget, setMaxBudget] = useState("");
+  const [minBudget, setMinBudget] = useState<number>(50);
+  const [maxBudget, setMaxBudget] = useState<number>(50);
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -89,10 +89,6 @@ const JobSearch = () => {
         console.log("jobs", jobsResponse.data);
         console.log("proposals", proposalsResponse.data);
       } catch (e: any) {
-        console.log(e);
-        // if (e.response.status === 401) {
-        //   window.location.href = "/";
-        // }
         setError(e);
         console.log(e);
       }
@@ -101,16 +97,16 @@ const JobSearch = () => {
     fetchJobs();
   }, []);
 
-  // const handleSearch = () => {
-  //   const filtered = jobs.filter((job) => {
-  //     const matchesCategory = category ? job.category === category : true;
-  //     const matchesBudget =
-  //       (minBudget ? job.budget >= parseFloat(minBudget) : true) &&
-  //       (maxBudget ? job.budget <= parseFloat(maxBudget) : true);
-  //     return matchesCategory && matchesBudget;
-  //   });
-  //   setFilteredJobs(filtered);
-  // };
+  const handleSearch = () => {
+    const filtered = jobs.filter((job) => {
+      const isWithinBudget = job.budget >= minBudget && job.budget <= maxBudget;
+      const isMatchingCategory = category ? job.category === category : true;
+      const isMatchingDuration = duration ? job.duration === duration : true;
+      return isWithinBudget && isMatchingCategory && isMatchingDuration;
+    });
+    console.log(filtered);
+    setFilteredJobs(filtered);
+  };
 
   return (
     <div className="container py-8">
@@ -118,9 +114,9 @@ const JobSearch = () => {
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">
-          {jobs.length > 0 ? (
+          {filteredJobs.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {jobs.map((job: Job) => (
+              {filteredJobs.map((job: Job) => (
                 <JobComponent
                   key={job._id}
                   job={job}
@@ -137,20 +133,30 @@ const JobSearch = () => {
 
         <div className="flex w-full flex-col gap-4  rounded-xl border border-border p-4 sm:w-1/3">
           <div className="flex justify-between gap-4">
-            <Input
-              type="number"
-              placeholder="الحد الأدنى للميزانية"
-              value={minBudget}
-              onChange={(e) => setMinBudget(e.target.value)}
-              className="rounded border p-2"
-            />
-            <Input
-              type="number"
-              placeholder="الحد الأقصى للميزانية"
-              value={maxBudget}
-              onChange={(e) => setMaxBudget(e.target.value)}
-              className="rounded border p-2"
-            />
+            <div className="grid gap-2">
+              <Label htmlFor="min">الحد الأدنى للميزانية</Label>
+              <Input
+                id="min"
+                type="number"
+                min={50}
+                placeholder="الحد الأدنى للميزانية"
+                value={minBudget}
+                onChange={(e) => setMinBudget(Number(e.target.value))}
+                className="rounded border p-2"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="max">الحد الأقصى للميزانية</Label>
+              <Input
+                id="max"
+                type="number"
+                min={50}
+                placeholder="الحد الأقصى للميزانية"
+                value={maxBudget}
+                onChange={(e) => setMaxBudget(Number(e.target.value))}
+                className="rounded border p-2"
+              />
+            </div>
           </div>
           <select
             value={category}
@@ -176,6 +182,9 @@ const JobSearch = () => {
               </option>
             ))}
           </select>
+          <Button variant="outline" onClick={handleSearch}>
+            بحث
+          </Button>
         </div>
       </div>
     </div>

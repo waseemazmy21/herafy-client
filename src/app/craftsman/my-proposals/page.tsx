@@ -31,6 +31,8 @@ const ProposalComponent = ({ proposal }: { proposal: Proposal }) => {
 
 const Page = () => {
   const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [filteredProposals, setFilteredProposals] = useState<Proposal[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -60,27 +62,42 @@ const Page = () => {
     fetchProposals();
   }, [error]);
 
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = e.target.value;
+    setSelectedStatus(selected);
+    if (selected === "") {
+      setFilteredProposals(proposals);
+    } else {
+      const filtered = proposals.filter(
+        (proposal) => proposal.status === selected,
+      );
+      setFilteredProposals(filtered);
+    }
+  };
+
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">العروض التي قدمتها</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">
-          {proposals.length > 0 ? (
+          {filteredProposals.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {proposals.map((proposal: Proposal) => (
+              {filteredProposals.map((proposal: Proposal) => (
                 <ProposalComponent key={proposal._id} proposal={proposal} />
               ))}
             </div>
           ) : (
-            <p className="text-2xl text-muted-foreground ">
-              لم تقم بالتقديم علي اي وظيفة بعد.
-            </p>
+            <p className="text-2xl text-muted-foreground ">لا توجد عروض</p>
           )}
         </div>
 
         <div className="flex w-full flex-col gap-4  rounded-xl border border-border p-4 sm:w-1/3">
-          <select className="rounded border p-2">
+          <select
+            className="rounded border p-2"
+            value={selectedStatus}
+            onChange={handleFilterChange}
+          >
             <option value="">كل الحالات</option>
             <option value="accepted">المقبولة</option>
             <option value="rejected">المرفوضه</option>
