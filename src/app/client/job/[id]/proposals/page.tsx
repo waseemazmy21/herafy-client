@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ProposalWithCraftsman as Proposal } from "@/lib/types";
 import ProposalComponent from "./Proposal";
+import CraftsmanCard from "./craftsman-card";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [craftsmanId, setCraftsmanId] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -61,6 +63,10 @@ const Page = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const handleClickCraftsmanName = (id: string) => {
+    setCraftsmanId(id);
+  };
+
   return (
     <div className="container py-8">
       <h3 className="typography-h3 mb-6">العروض</h3>
@@ -72,6 +78,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               {proposals.map((proposal: Proposal) => (
                 <ProposalComponent
                   onAccept={handleAcceptProposal}
+                  onClickCraftsmanName={setCraftsmanId}
                   key={proposal._id}
                   proposal={proposal}
                 />
@@ -82,6 +89,10 @@ const Page = ({ params }: { params: { id: string } }) => {
               لم تتلقي اي عرض لهذه الوظيفه.
             </p>
           )}
+        </div>
+
+        <div className="flex w-full flex-col gap-4  rounded-xl border border-border p-4 sm:w-1/3">
+          <CraftsmanCard craftsmanId={craftsmanId} />
         </div>
       </div>
     </div>

@@ -98,7 +98,7 @@ function CraftsmanRegistrationForm() {
                 <Label htmlFor="phone">رقم الهاتف</Label>
                 <Input
                   id="phone"
-                  type="phone"
+                  type="text"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
