@@ -16,6 +16,7 @@ export type Proposal = {
   message: string;
   proposedBudget: number;
   status: "pending" | "accepted" | "rejected";
+  isRated: boolean;
 };
 
 export type ProposalWithCraftsman = {
@@ -28,4 +29,5 @@ export type ProposalWithCraftsman = {
   message: string;
   proposedBudget: number;
   status: "pending" | "accepted" | "rejected";
+  isRated: boolean;
 };

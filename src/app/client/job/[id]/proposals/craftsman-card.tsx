@@ -2,12 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import StarRating from "./star-component";
+import { Stars } from "lucide-react";
 
 type Craftsman = {
   name: string;
   description: string;
   phone: string;
   jobTitle: string;
+  ratings: number[];
 };
 
 const CraftsmanCard = ({ craftsmanId }: { craftsmanId: string }) => {
@@ -35,21 +38,43 @@ const CraftsmanCard = ({ craftsmanId }: { craftsmanId: string }) => {
   }, [craftsmanId]);
 
   return (
-    <div className="grid gap-4">
-      <div className="grid gap-2">
-        <h3 className="typography-h3 mb-1">{craftsman?.name}</h3>
-        <p className=" text-sm text-muted-foreground">{craftsman?.jobTitle}</p>
+    craftsman && (
+      <div className="grid gap-4">
+        <div className="grid gap-2">
+          <h3 className="typography-h3 mb-1">{craftsman?.name}</h3>
+          <p className=" text-sm text-muted-foreground">
+            {craftsman?.jobTitle}
+          </p>
+        </div>
+        <p className=" text-sm text-muted-foreground">
+          {craftsman?.description}
+        </p>
+        <p>
+          <span
+            className={`text-sm text-muted-foreground ${!craftsman && "hidden"}`}
+          >
+            رقم الهاتف:{" "}
+          </span>
+          {craftsman?.phone}
+        </p>
+        <p>
+          <span
+            className={`text-sm text-muted-foreground ${!craftsman && "hidden"}`}
+          >
+            التقيم:
+          </span>
+          {craftsman.ratings.length > 0 ? (
+            <StarRating rating={craftsman.ratings[0]} />
+          ) : (
+            <span
+              className={`text-sm text-muted-foreground ${!craftsman && "hidden"} pr-2`}
+            >
+              لا يوجد
+            </span>
+          )}
+        </p>
       </div>
-      <p className=" text-sm text-muted-foreground">{craftsman?.description}</p>
-      <p>
-        <span
-          className={`text-sm text-muted-foreground ${!craftsman && "hidden"}`}
-        >
-          رقم الهاتف:{" "}
-        </span>
-        {craftsman?.phone}
-      </p>
-    </div>
+    )
   );
 };
 

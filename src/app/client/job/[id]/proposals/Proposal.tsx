@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { ProposalWithCraftsman as Proposal } from "@/lib/types";
-import { handleClientScriptLoad } from "next/script";
+import RatingDialog from "./rating-daialog";
 
 const propsalStatus = {
   pending: "لم يتم التحديد",
@@ -22,6 +22,22 @@ const ProposalComponent = ({
   onAccept: (proposalId: string) => void;
   onClickCraftsmanName: (craftsmanId: string) => void;
 }) => {
+  const handleAddRating = async (rating: number) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `http://localhost:7000/api/proposals/${proposal._id}/addrating`,
+        { rating },
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        },
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <div
       onMouseEnter={() => {
@@ -55,6 +71,9 @@ const ProposalComponent = ({
           >
             {propsalStatus[proposal.status]}
           </p>
+        )}
+        {proposal.status === "accepted" && proposal.isRated === false && (
+          <RatingDialog handleAddRating={handleAddRating} />
         )}
       </div>
     </div>
