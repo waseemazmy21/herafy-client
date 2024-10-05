@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import Header from "@/components/header";
 import { UserProvider } from "./contexts/user-context";
 import Footer from "@/components/footer";
 
-const rubik = Rubik({ subsets: ["arabic"], variable: "--font-sans" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Herafy",
@@ -19,11 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="light min-h-screen">
+    <html lang="en" className="light min-h-screen">
       <body
         className={cn(
           "flex min-h-screen flex-col bg-background font-sans antialiased",
-          rubik.variable,
+          inter.variable,
         )}
       >
         <UserProvider>

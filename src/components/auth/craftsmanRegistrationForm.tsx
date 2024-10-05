@@ -67,15 +67,12 @@ function CraftsmanRegistrationForm() {
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">إنشاء حساب</CardTitle>
-            <CardDescription>
-              أدخل تفاصيل حسابك لإنشاء حساب حرفي
-            </CardDescription>
+            <CardTitle className="text-2xl">Crate an Account</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-4">
-                <Label htmlFor="name">الاسم</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -85,7 +82,7 @@ function CraftsmanRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="email">البريد الإلكتروني</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -95,7 +92,7 @@ function CraftsmanRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="phone">رقم الهاتف</Label>
+                <Label htmlFor="phone">Phone Number</Label>
                 <Input
                   id="phone"
                   type="text"
@@ -105,7 +102,7 @@ function CraftsmanRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="password">كلمة المرور</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -115,7 +112,7 @@ function CraftsmanRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="jobTitle">المسمى الوظيفي (الحرفه)</Label>
+                <Label htmlFor="jobTitle">Job Title</Label>
                 <Input
                   id="jobTitle"
                   type="text"
@@ -125,23 +122,22 @@ function CraftsmanRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="description">الوصف</Label>
+                <Label htmlFor="description">Bio</Label>
                 <Textarea
                   id="description"
                   required
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="اكتب عن خبراتك في هذه الحرفه"
                 />
               </div>
               <Button type="submit" className="bg-gradient-hover w-full">
-                إنشاء حساب
+                Craete an Account
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              لديك حساب؟{" "}
+              Already have an account?{" "}
               <Link href="/login" className="underline">
-                تسجيل الدخول
+                Log In{" "}
               </Link>
             </div>
           </CardContent>

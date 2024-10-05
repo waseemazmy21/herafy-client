@@ -5,7 +5,7 @@ function Categories() {
   return (
     <section className="container flex flex-col items-center gap-8">
       <h2 className="text-center text-2xl font-bold sm:text-4xl">
-        تصفح المواهب حسب الفئة
+        Browse Talents by Category
       </h2>
       <div className=" grid w-full max-w-screen-lg grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
         {categories.map((category, i) => (
@@ -24,8 +24,8 @@ function Categories() {
                 className="h-16 w-16 "
               />
             </div>
-            <h3 className="typography-h3 mb-4">{category.name}</h3>
-            <span className="text-center">{category.descreption}</span>
+            <h3 className="heading3 mb-4">{category.name}</h3>
+            <span className="text-center">{category.description}</span>
           </div>
         ))}
       </div>

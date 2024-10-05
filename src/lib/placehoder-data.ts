@@ -2,7 +2,7 @@ type Category = {
   id: string;
   name: string;
   imageUrl: string;
-  descreption: string;
+  description: string;
   rating: number;
   numberOfCraftsmen: number;
 };
@@ -10,70 +10,72 @@ type Category = {
 export const categories: Category[] = [
   {
     id: "1",
-    name: "حياكة",
+    name: "Knitting",
     imageUrl: "/images/home/knitting.png",
-    descreption: "صناعة المنسوجات أو القماش عن طريق تشابك أو ربط حلقات الخيوط",
+    description:
+      "The production of textiles or fabric by interlocking or looping yarns.",
     rating: 4.8,
     numberOfCraftsmen: 220,
   },
   {
     id: "2",
-    name: "النجار",
+    name: "Carpentry",
     imageUrl: "/images/home/carpenter.png",
-    descreption:
-      "النجارون هم محترفون ذوو مهارات عالية، يقومون بصياغة الهياكل وبنائها وتركيبها وإصلاحها.",
+    description:
+      "Carpenters are highly skilled professionals who construct, install, and repair structures.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "3",
-    name: "تطريز",
+    name: "Embroidery",
     imageUrl: "/images/home/embroidery.png",
-    descreption:
-      "فن تزيين مواد الديكور، وبشكل أساسي الأقمشة النسيجية، بواسطة الإبرة والخيط",
+    description:
+      "The art of decorating materials, primarily textiles, using needle and thread.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "4",
-    name: "سباك",
+    name: "Plumbing",
     imageUrl: "/images/home/plumbing.png",
-    descreption:
-      "إصلاح الأنابيب والتركيبات التي تحمل الماء أو الغاز أو السوائل الأخرى في المنازل والشركات",
+    description:
+      "Repairing pipes and fixtures that carry water, gas, or other fluids in homes and businesses.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "5",
-    name: "حداد",
+    name: "Blacksmithing",
     imageUrl: "/images/home/hammer.png",
-    descreption: "سيقوم عامل اللحام بلحام المعدات والمرافق وصيانتها.",
+    description: "A welder will weld and maintain equipment and facilities.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "6",
-    name: "اكسكسورات",
+    name: "Accessories",
     imageUrl: "/images/home/bracelet.png",
-    descreption: "هي عناصر زخرفية يتم ارتداؤها لتكملة أو تحسين مظهر الشخص.",
+    description:
+      "Decorative items worn to complement or enhance a person's appearance.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "7",
-    name: "خزف",
+    name: "Pottery",
     imageUrl: "/images/home/potter.png",
-    descreption:
-      "الخزف هو زينة مصنوعة من المواد غير العضوية، غير المعدنية، صلبة وهشة (بعد أن يوضع بالنار)",
+    description:
+      "Pottery refers to ornaments made from inorganic, non-metallic materials, solid and brittle after firing.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },
   {
     id: "8",
-    name: "أعمال النسيج",
+    name: "Textile Work",
     imageUrl: "/images/home/cloth.png",
-    descreption:
-      "أي قماش أو سلع يتم إنتاجها عن طريق النسيج أو الحياكة أو التلبيد",
+    description:
+      "Any fabric or goods produced by weaving, knitting, or felting.",
     rating: 4.8,
     numberOfCraftsmen: 1834,
   },

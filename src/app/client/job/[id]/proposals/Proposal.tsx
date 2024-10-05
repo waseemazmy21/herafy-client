@@ -46,7 +46,7 @@ const ProposalComponent = ({
       className="w-full rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] "
     >
       <div className="mb-4 flex justify-between gap-4">
-        <h4 className="typography-h4">
+        <h4 className="heading4">
           عرض من:{" "}
           <Button variant="link" className="underline">
             {proposal.craftsmanId.name}

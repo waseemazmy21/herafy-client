@@ -69,7 +69,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container py-8">
-      <h3 className="typography-h3 mb-6">العروض</h3>
+      <h3 className="heading3 mb-6">العروض</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">

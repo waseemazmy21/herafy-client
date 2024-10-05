@@ -59,15 +59,12 @@ function LoginForm() {
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">تسجيل الدخول</CardTitle>
-            <CardDescription>
-              أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك
-            </CardDescription>
+            <CardTitle className="text-2xl">Log In</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-4">
-                <Label htmlFor="email">البريد الإلكتروني</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -78,7 +75,7 @@ function LoginForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="password">كلمة المرور</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -88,13 +85,12 @@ function LoginForm() {
                 />
               </div>
               <Button type="submit" className="bg-gradient-hover w-full">
-                تسجيل الدخول
+                Log In{" "}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              ليس لديك حساب؟{" "}
               <Link href="/register" className="underline">
-                إنشاء حساب
+                Don&lsquo;t have an account?
               </Link>
             </div>
           </CardContent>

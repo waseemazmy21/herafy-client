@@ -17,7 +17,7 @@ const ProposalComponent = ({ proposal }: { proposal: Proposal }) => {
   return (
     <div className="w-full cursor-pointer rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] ">
       <div className="mb-4 flex justify-between gap-4">
-        <h4 className="typography-h4">العرض</h4>
+        <h4 className="heading4">العرض</h4>
         <p>{proposal.proposedBudget} جنيه مصري</p>
       </div>
       <p className="text-muted-foreground">{proposal.message}</p>
@@ -78,7 +78,7 @@ const Page = () => {
 
   return (
     <div className="container py-8">
-      <h3 className="typography-h3 mb-6">العروض التي قدمتها</h3>
+      <h3 className="heading3 mb-6">العروض التي قدمتها</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">

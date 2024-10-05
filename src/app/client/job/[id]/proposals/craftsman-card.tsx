@@ -41,7 +41,7 @@ const CraftsmanCard = ({ craftsmanId }: { craftsmanId: string }) => {
     craftsman && (
       <div className="grid gap-4">
         <div className="grid gap-2">
-          <h3 className="typography-h3 mb-1">{craftsman?.name}</h3>
+          <h3 className="heading3 mb-1">{craftsman?.name}</h3>
           <p className=" text-sm text-muted-foreground">
             {craftsman?.jobTitle}
           </p>

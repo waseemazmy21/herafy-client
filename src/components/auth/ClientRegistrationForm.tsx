@@ -62,15 +62,12 @@ function ClientRegistrationForm() {
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">إنشاء حساب</CardTitle>
-            <CardDescription>
-              أدخل تفاصيل حسابك لإنشاء حساب عميل
-            </CardDescription>
+            <CardTitle className="text-2xl">Create an Account</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-4">
-                <Label htmlFor="name">الاسم</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input
                   id="name"
                   type="text"
@@ -80,7 +77,7 @@ function ClientRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="email">البريد الإلكتروني</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -90,7 +87,7 @@ function ClientRegistrationForm() {
                 />
               </div>
               <div className="grid gap-4">
-                <Label htmlFor="password">كلمة المرور</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -100,13 +97,13 @@ function ClientRegistrationForm() {
                 />
               </div>
               <Button type="submit" className="bg-gradient-hover w-full">
-                إنشاء حساب
+                Craete an Account
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              لديك حساب؟{" "}
+              Already have an account?{" "}
               <Link href="/login" className="underline">
-                تسجيل الدخول
+                Log In{" "}
               </Link>
             </div>
           </CardContent>

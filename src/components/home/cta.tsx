@@ -1,10 +1,10 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
 function Cta() {
   return (
-    <section className="container mb-8 flex items-center gap-8 text-center sm:text-right">
+    <section className="container mb-8 flex items-center gap-8 text-center sm:text-left">
       <div className="hidden w-1/3 sm:block">
         <Image
           src="/images/home/cta.png"
@@ -16,30 +16,30 @@ function Cta() {
       </div>
       <div>
         <h2 className="mb-2 text-2xl font-bold sm:text-4xl">
-          أعلن عن وظيفة وقم بتعيين أفضل الحرفيين
+          Post a Job and Hire the Best Craftsmen
         </h2>
         <p className="mb-8 text-muted-foreground">
-          لا يجب أن يكون العثور على المواهب عملاً روتينيًا. أعلن عن وظيفة وفم
-          بأختيار افضل الحرفيين
+          Finding the right talent shouldn&lq;t be a hassle. Post a job and
+          select the best craftsmen.
         </p>
         <div className="flex justify-center gap-4">
           <Link
             href="/login"
             className={buttonVariants({
               variant: "default",
-              class: "bg-gradient text-white",
+              class: "bg-gradient-hover text-white",
             })}
           >
-            تسجيل الدخول
+            Log In
           </Link>
           <Link
             href="/register"
             className={buttonVariants({
               variant: "default",
-              class: "bg-gradient text-white",
+              class: "bg-gradient-hover text-white",
             })}
           >
-            أنشاء حساب
+            Create an Account
           </Link>
         </div>
       </div>

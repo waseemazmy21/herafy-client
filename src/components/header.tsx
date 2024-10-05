@@ -4,8 +4,6 @@ import { useUser } from "@/app/contexts/user-context";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "lucide-react";
 import { DropDownMenu } from "./drop-down-menu";
 
 function Header() {
@@ -25,29 +23,29 @@ function Header() {
             href="/"
             className="text-gradient self-baseline text-2xl font-bold"
           >
-            حرفي
+            Herafy
           </Link>
           <nav className="hidden gap-4 text-sm text-muted-foreground sm:inline-flex">
             {user?.role === "craftsman" && (
               <>
                 <Link href="/craftsman" className="hover:text-foreground">
-                  صفحتي
+                  Home
                 </Link>
                 <Link
                   href="/craftsman/my-proposals"
                   className="hover:text-foreground"
                 >
-                  العروض التي قدمتها
+                  Prposals
                 </Link>
               </>
             )}
             {user?.role === "client" && (
               <>
                 <Link href="/client" className="hover:text-foreground">
-                  مساحة العمل
+                  Dashboard
                 </Link>
                 <Link href="/client/post-job" className="hover:text-foreground">
-                  نشر وظيفة
+                  Post a job
                 </Link>
               </>
             )}
@@ -75,7 +73,7 @@ function Header() {
                 class: "bg-gradient-hover text-white",
               })}
             >
-              تسجبل الدخول
+              Log In
             </Link>
           )}
         </div>

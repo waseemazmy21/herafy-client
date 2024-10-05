@@ -19,7 +19,7 @@ const JobComponent = ({
   return (
     <div className="w-full rounded-xl border border-border bg-background p-4 transition hover:scale-[101%] ">
       <div className="mb-4 flex justify-between gap-4">
-        <h4 className="typography-h4">{job.title}</h4>
+        <h4 className="heading4">{job.title}</h4>
         <p>{job.budget} جنيه مصري</p>
       </div>
       <p className="text-muted-foreground">{job.description}</p>
@@ -110,7 +110,7 @@ const JobSearch = () => {
 
   return (
     <div className="container py-8">
-      <h3 className="typography-h3 mb-6">الوظائف</h3>
+      <h3 className="heading3 mb-6">الوظائف</h3>
 
       <div className="flex flex-col-reverse gap-8 sm:flex-row ">
         <div className="w-full sm:w-2/3">
