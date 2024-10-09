@@ -6,9 +6,9 @@ type AlertProps = {
   message: string;
 };
 
-const AlertComponent = ({ variant, message }: AlertProps) => {
+const AlertComponent = ({ variant = 'default', message }: AlertProps) => {
   return (
-    <Alert variant="destructive" className="mx-auto my-4 max-w-xl">
+    <Alert variant={variant} className="mx-auto my-4 max-w-xl">
       <AlertCircle className="h-4 w-4" />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription>{message}</AlertDescription>
