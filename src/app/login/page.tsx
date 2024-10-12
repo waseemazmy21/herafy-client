@@ -4,35 +4,47 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { translateServerMessage } from "@/utils/utils";
 import { useUser } from "../contexts/user-context";
+import Loading from "@/components/global/loading";
+import AlertComponent from "@/components/global/alert";
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const { setUser } = useUser();
+
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+  });
+  
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      setLoading(true);
+      setError(null);
+
       const response = await axios.post(
-        "http://localhost:7000/api/users/login",
-        {
-          email,
-          password,
-        },
+        `${process.env.NEXT_PUBLIC_HERAFY_BASE_URL}/api/auth/login`,
+        formData,
       );
 
       const user = response.data.user;
@@ -45,21 +57,41 @@ function LoginForm() {
           ? router.push("/client")
           : router.push("/craftsman");
       }
-    } catch (e: any) {
-      if (e.response) {
-        setError(e.response.data.message);
+    } catch (error: any) {
+      if (error.response) {
+        console.log("response error");
+        setError(error.response.data.message);
+      } else if (error.request) {
+        console.log("request error");
+        if (!navigator.onLine) {
+          setError("Network error. Please check your connection.");
+        } else {
+          setError(
+            "It seems the server is currently down. Please try again later.",
+          );
+        }
+      } else {
+        console.log("unexpected error");
+        setError("An unexpected error occurred. Please try again.");
       }
-      console.error(error);
-      alert(translateServerMessage(error));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="p-8">
+      {/* Loading */}
+      {loading && <Loading />}
+
+      {/* Error */}
+      {error && <AlertComponent variant="destructive" message={error} />}
+
+      {/* Login Form */}
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">Log In</CardTitle>
+            <CardTitle className="text-center">Log In</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
@@ -67,25 +99,32 @@ function LoginForm() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="grid gap-4">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  minLength={8}
+                  onChange={handleChange}
                 />
               </div>
-              <Button type="submit" className="bg-gradient-hover w-full">
-                Log In{" "}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-gradient-hover w-full"
+              >
+                Log In
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
