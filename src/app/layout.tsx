@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import Header from "@/components/header";
 import { UserProvider } from "./contexts/user-context";
 import Footer from "@/components/footer";
+import Provider from "./contexts/query-client-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,11 +30,13 @@ export default function RootLayout({
           inter.variable,
         )}
       >
-        <UserProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </UserProvider>
+        <Provider>
+          <UserProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </UserProvider>
+        </Provider>
       </body>
     </html>
   );
