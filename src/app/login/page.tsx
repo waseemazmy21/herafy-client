@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,81 +10,54 @@ import Link from "next/link";
 import { useUser } from "../contexts/user-context";
 import Loading from "@/components/global/loading";
 import AlertComponent from "@/components/global/alert";
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { useMutation } from "@tanstack/react-query";
+import { login } from "@/services/auth-services";
+import { LoginCredentials } from "@/types/auth";
+import errorHandler from "@/utils/error-handler";
+import { AxiosResponse } from "axios";
 
 function LoginForm() {
   const router = useRouter();
   const { setUser } = useUser();
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<LoginCredentials>({
     email: "",
     password: "",
   });
-  
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevData) => ({
+    setFormData((prevData: LoginCredentials) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      setLoading(true);
-      setError(null);
+  const { mutate, error, isPending } = useMutation({
+    mutationFn: login,
+    onSuccess: (res: AxiosResponse) => {
+      const user = res.data.user;
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_HERAFY_BASE_URL}/api/auth/login`,
-        formData,
-      );
+      setUser(user);
+      user.role === "client"
+        ? router.push("/client")
+        : router.push("/craftsman");
+    },
+  });
 
-      const user = response.data.user;
-      const token = response.headers["x-auth-token"];
-
-      if (token) {
-        localStorage.setItem("token", token);
-        setUser(user);
-        user.role === "client"
-          ? router.push("/client")
-          : router.push("/craftsman");
-      }
-    } catch (error: any) {
-      if (error.response) {
-        console.log("response error");
-        setError(error.response.data.message);
-      } else if (error.request) {
-        console.log("request error");
-        if (!navigator.onLine) {
-          setError("Network error. Please check your connection.");
-        } else {
-          setError(
-            "It seems the server is currently down. Please try again later.",
-          );
-        }
-      } else {
-        console.log("unexpected error");
-        setError("An unexpected error occurred. Please try again.");
-      }
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    mutate(formData);
   };
 
   return (
     <div className="p-8">
       {/* Loading */}
-      {loading && <Loading />}
+      {isPending && <Loading />}
 
       {/* Error */}
-      {error && <AlertComponent variant="destructive" message={error} />}
+      {error && (
+        <AlertComponent variant="destructive" message={errorHandler(error)} />
+      )}
 
       {/* Login Form */}
       <form onSubmit={handleSubmit}>
@@ -121,7 +93,7 @@ function LoginForm() {
               </div>
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={isPending}
                 className="bg-gradient-hover w-full"
               >
                 Log In
