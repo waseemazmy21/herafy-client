@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import ClientRegistraionForm from "@/components/auth/ClientRegistrationForm";
 import CraftsmanRegistrationForm from "@/components/auth/craftsmanRegistrationForm";
 import Image from "next/image";

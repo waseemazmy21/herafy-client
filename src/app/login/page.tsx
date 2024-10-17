@@ -15,6 +15,7 @@ import { login } from "@/services/auth-services";
 import { LoginCredentials } from "@/types/auth";
 import errorHandler from "@/utils/error-handler";
 import { AxiosResponse } from "axios";
+import User from "@/types/user";
 
 function LoginForm() {
   const router = useRouter();
@@ -35,7 +36,7 @@ function LoginForm() {
   const { mutate, error, isPending } = useMutation({
     mutationFn: login,
     onSuccess: (res: AxiosResponse) => {
-      const user = res.data.user;
+      const user: User = res.data.user;
 
       setUser(user);
       user.role === "client"

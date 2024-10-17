@@ -10,8 +10,6 @@ function Header() {
   const { user, setUser } = useUser();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
     window.location.href = "/";
   };
 
@@ -53,18 +51,7 @@ function Header() {
         </div>
 
         <div className="hidden flex-1 items-center justify-end gap-4 sm:inline-flex">
-          {/* <Input
-            className=" hidden max-w-64 rounded-full border-2 focus-visible:ring-0 md:inline-block"
-            type="search"
-            placeholder="البحث..."
-          /> */}
           {user ? (
-            // <Button
-            //   onClick={handleLogout}
-            //   className="bg-gradient-hover text-white"
-            // >
-            //   تسجيل خروج
-            // </Button>
             <DropDownMenu handleLogout={handleLogout} />
           ) : (
             <Link

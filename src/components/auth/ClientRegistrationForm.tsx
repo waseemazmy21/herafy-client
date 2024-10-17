@@ -2,63 +2,70 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { translateServerMessage } from "@/utils/utils";
 import { useUser } from "@/app/contexts/user-context";
+import { ClientRegistrationData } from "@/types/auth";
+import { useMutation } from "@tanstack/react-query";
+import { registerClient } from "@/services/auth-services";
+import { AxiosResponse } from "axios";
+import User from "@/types/user";
+import Loading from "../global/loading";
+import AlertComponent from "../global/alert";
+import errorHandler from "@/utils/error-handler";
 
 function ClientRegistrationForm() {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState<ClientRegistrationData>({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const { setUser } = useUser();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: registerClient,
+    onSuccess: (res: AxiosResponse) => {
+      const user: User = res.data.user;
+
+      setUser(user);
+      user.role === "client"
+        ? router.push("/client")
+        : router.push("/craftsman");
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:7000/api/users/register",
-        {
-          name,
-          email,
-          password,
-          role: "client",
-        },
-      );
-
-      console.log("return value form client registration ", response.data);
-      const user = response.data;
-      const token = response.headers["x-auth-token"];
-
-      if (token) {
-        localStorage.setItem("token", token);
-        setUser(user);
-        router.push("/client");
-      }
-    } catch (e: any) {
-      if (e.response) {
-        setError(e.response.data);
-        console.log(e.response.data);
-      }
-
-      alert(translateServerMessage(error));
-    }
+    mutate(formData);
   };
 
   return (
     <div className="p-8">
+      {/* Loading */}
+      {isPending && <Loading />}
+
+      {/* Error */}
+      {error && (
+        <AlertComponent
+          variant="destructive"
+          message={errorHandler(error)[0]}
+          errors={errorHandler(error).slice(1)}
+        />
+      )}
+
+      {/* Form */}
       <form onSubmit={handleSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
@@ -69,31 +76,35 @@ function ClientRegistrationForm() {
               <div className="grid gap-4">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
+                  name="name"
                   id="name"
                   type="text"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </div>
               <div className="grid gap-4">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  name="email"
                   id="email"
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="grid gap-4">
                 <Label htmlFor="password">Password</Label>
                 <Input
+                  name="password"
                   id="password"
                   type="password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  minLength={8}
+                  value={formData.password}
+                  onChange={handleChange}
                 />
               </div>
               <Button type="submit" className="bg-gradient-hover w-full">
