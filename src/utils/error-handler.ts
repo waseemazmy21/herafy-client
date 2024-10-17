@@ -1,14 +1,15 @@
-const errorHandler = (error: any): string => {
-  if (error.response) {
-    return error.response.data.message;
-  } else if (error.request) {
+const errorHandler = (error: any): string[] => {
+  if (error?.response) {
+    console.log(error.response.data.errors);
+    return [error.response.data.message, ...(error.response.data.errors || [])];
+  } else if (error?.request) {
     if (!navigator.onLine) {
-      return "Network error. Please check your connection.";
+      return ["Network error. Please check your connection."];
     } else {
-      return "It seems the server is currently down. Please try again later.";
+      return ["It seems the server is currently down. Please try again later."];
     }
   } else {
-    return "An unexpected error occurred. Please try again.";
+    return ["An unexpected error occurred. Please try again."];
   }
 };
 
